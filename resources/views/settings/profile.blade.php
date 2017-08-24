@@ -99,21 +99,21 @@
                     </a>
 
                     <div class="card-title my-2">
-                        <a class="font-weight-bold text-inherit d-block" href="#">牧野</a>
-                        <span class="text-muted">&#64;snicmakino</span>
+                        <a class="font-weight-bold text-inherit d-block" href="#">{{ $profile->display_name }}</a>
+                        <span class="text-muted">&#64;{{ $profile->url_name }}</span>
                     </div>
                 </div>
             </div>
 
             <div class="list-group mb-4">
-                <a href="#" class="list-group-item list-group-item-action justify-content-between">
+                <a href="/setting/account" class="list-group-item list-group-item-action justify-content-between">
                     アカウント
                     <span class="icon icon-chevron-right"></span>
                 </a>
             </div>
 
             <div class="list-group mb-4">
-                <a href="#" class="list-group-item list-group-item-action justify-content-between">
+                <a href="/setting/profile" class="list-group-item list-group-item-action justify-content-between">
                     プロフィール
                     <span class="icon icon-chevron-right"></span>
                 </a>
@@ -132,7 +132,8 @@
                     <strong>プロフィール</strong>
                 </div>
                 <div class="card-block">
-                    <form method="POST" action="#" enctype="multipart/form-data">
+
+                    <form method="POST" action="/setting/profile/" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
 
@@ -140,7 +141,7 @@
                             <label for="display_name" class="col-3 col-form-label">表示名</label>
                             <div class="col-9">
                                 <input name="display_name" type="text" id="display_name" class="form-control"
-                                       value="牧野">
+                                       value="{{ $profile->display_name }}">
 
                                 @if ($errors->has('display_name'))
                                     <div class="form-control-feedback">
@@ -166,7 +167,7 @@
                             <label for="description" class="col-3 col-form-label">自己紹介</label>
                             <div class="col-9">
                                 <input name="description" type="text" id="description" class="form-control"
-                                       value="Software engineer（JavaとかDBとかAWSとか） 空前絶後のKotlinブーム中" maxlength="160">
+                                       value="{{ $profile->description }}" maxlength="160">
 
                                 @if ($errors->has('description'))
                                     <div class="form-control-feedback">

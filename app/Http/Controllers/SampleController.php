@@ -2,6 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support;
+
+
 class SampleController extends Controller
 {
     /**
@@ -9,7 +15,15 @@ class SampleController extends Controller
      */
     public function account()
     {
-        return view('settings.account');
+        $displayName = Auth::user()->display_name;
+        $urlName = Auth::user()->url_name;
+        $Description = Auth::user()->description;
+
+        return view('settings.account',[
+            'display_name' => $displayName,
+            'url_name' => $urlName,
+            'description' => $Description,
+        ]);
     }
 
     /**
@@ -17,7 +31,27 @@ class SampleController extends Controller
      */
     public function profile()
     {
-        return view('settings.profile');
+        $displayName = Auth::user()->display_name;
+        $urlName = Auth::user()->url_name;
+        $Description = Auth::user()->description;
+
+        return view('settings.profile',[
+            'display_name' => $displayName,
+            'url_name' => $urlName,
+            'description' => $Description,
+        ]);
+    }
+
+    public function profile_update(Request $request, $displayName){
+        $profile = User::where('display_name', $displayName)->firstOrFail();
+
+        $profile->update([
+            'display_name' => $request->input('display_name'),
+            'description' => $request->input('description'),
+        ]);
+
+        return redirect('settings/profile'.$profile->display_name);
+
     }
 
     /**
