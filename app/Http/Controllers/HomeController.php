@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Tweet;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,11 +23,17 @@ class HomeController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $tweets = Tweet::where('user_id', $user->id)->orderBy('id', 'desc')->get();
+        $followUsers = $user->follows()->get();
+        $tweet = Tweet::whereIn('user_id', $followUsers->pluck('id'))->orderBy('created_at', 'desc')->get();
+        $tweets = $tweet->merge(Tweet::where('user_id', $user->id)->get());
+//        dd($merge);
+//        dd([$user->id, $followUsers->pluck('id')],Tweet::whereIn('user_id', [$user->id, $followUsers->pluck('id')])->orderBy('created_at', 'desc')->toSql());
+        $followCount = count($followUsers);
 
         return view('home', [
             'tweets' => $tweets,
             'user'   => $user,
+            'followCount' => $followCount,
 
         ]);
     }

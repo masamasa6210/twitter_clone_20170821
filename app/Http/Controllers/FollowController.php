@@ -17,11 +17,13 @@ class FollowController extends Controller
     public function followers()
     {
         $user = Auth::user();
-        $followUsers = User::find($user->id)->follows()->get();
+        $followUsers = $user->follows()->get();
 
+        $followCount = count($followUsers);
         return view('user.followers',[
             'user' => $user,
-            'follow_users' => $followUsers
+            'follow_users' => $followUsers,
+            'followCount' => $followCount,
         ]);
     }
 

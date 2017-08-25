@@ -28,9 +28,6 @@ Route::get('home', 'HomeController@index')->name('home');
 Route::post('home', 'HomeController@tweet');
 
 Route::get('user/{url_name}', 'UserController@user');
-//Route::post('user/{url_name}', 'UserController@follow');
-//Route::delete('user/{url_name}', 'UserController@unfollow');
-
 Route::get('setting/profile', 'SettingController@profile');
 Route::put('setting/profile', 'SettingController@profile_update');
 

@@ -111,9 +111,9 @@
 
                     <ul class="card-profile-stats">
                         <li class="card-profile-stat">
-                            <a href="#" class="text-inherit">
+                            <a href="/following" class="text-inherit">
                                 <span class="text-muted">フォロー</span>
-                                <strong class="d-block">30</strong>
+                                <strong class="d-block">{{ $followCount }}</strong>
                             </a>
                         </li>
                         <li class="card-profile-stat">
@@ -157,11 +157,10 @@
                                 </a>
                                 <div class="media-body">
                                     <div class="mb-2">
-                                        <a class="text-inherit" href="user/{{ $user->url_name }}">
-                                            <strong>{{ $user->display_name }}</strong>
-                                            <span class="text-muted">&#64;{{ $user->url_name }}</span>
+                                        <a class="text-inherit" href="user/{{ $tweet->user->url_name }}">
+                                            <strong>{{ $tweet->user->display_name }}</strong>
+                                            <span class="text-muted">&#64;{{ $tweet->user->url_name }}</span>
                                         </a>
-                                        -
                                         <time class="small text-muted">{{ $tweet->created_at }}</time>
                                     </div>
 
