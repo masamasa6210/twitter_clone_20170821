@@ -92,7 +92,7 @@
         <div class="container-inner">
             <img class="rounded-circle media-object" src="{{ asset('images/no-thumb.png') }}">
             <h3 class="profile-header-user"></h3>
-            <p class="profile-header-bio"></p>
+            <p class="profile-header-bio">{{ $targetUser->display_name }}</p>
         </div>
     </div>
 
@@ -101,7 +101,7 @@
             <li class="nav-item">
                 <a href="#" class="nav-link">
                     ツイート
-                    <strong class="d-block"></strong>
+                    <strong class="d-block">{{ $count }}</strong>
                 </a>
             </li>
             <li class="nav-item">
@@ -126,20 +126,25 @@
             <div class="card mb-4">
                 <div class="card-block">
                     <h6 class="card-title">フォロー/解除</h6>
-                    <form action="#" method="POST">
+
+                    @if($isfollow)
+                        <form action="{{ url($targetUser->url_name."/unfollow") }}" method="POST">
+                            {{ csrf_field() }}
+                            {{ method_field('DELETE') }}
+
+                            <button type="submit" class="btn btn-outline-danger btn-md following" style="width: 7rem;">
+                                <span>フォロー中</span>
+                                <span>解除</span>
+                            </button>
+                        </form>
+                    @else
+                        <form action="{{ url($targetUser->url_name."/follow") }}" method="POST">
                         {{ csrf_field() }}
 
-                        <button type="submit" class="btn btn-outline-danger btn-md following" style="width: 7rem;">
-                            <span>フォロー中</span>
-                            <span>解除</span>
-                        </button>
-                    </form>
+                        <button type="submit" class="btn btn-outline-primary btn-md" value = "">フォローする</button>
+                        </form>
+                    @endif
 
-                    {{--<form action="#" method="POST">--}}
-                    {{--{{ csrf_field() }}--}}
-
-                    {{--<button type="submit" class="btn btn-outline-primary btn-md">フォローする</button>--}}
-                    {{--</form>--}}
                 </div>
             </div>
         </div>
@@ -147,7 +152,7 @@
         <div class="col-lg-6">
             <ul class="list-group media-list-stream mb-4">
 
-
+                @foreach($targetUser->tweets as $tweet)
                     <li class="media list-group-item p-4">
                         <article class="d-flex w-100">
                             <a class="font-weight-bold text-inherit d-block" href="#">
@@ -157,7 +162,7 @@
                             <div class="media-body">
                                 <div class="mb-2">
                                     <a class="text-inherit" href="#">
-                                        <strong>{{ $urlName->display_name }}</strong>
+                                        <strong>{{ $targetUser->display_name }}</strong>
                                         <span class="text-muted"></span>
                                     </a>
 
@@ -165,11 +170,12 @@
                                 </div>
 
                                 <p>
-
+                                    {{ $tweet->body }}
                                 </p>
                             </div>
                         </article>
                     </li>
+                @endforeach
 
 
 

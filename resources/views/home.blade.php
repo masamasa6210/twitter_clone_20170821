@@ -102,7 +102,7 @@
                         <a href="#" class="font-weight-bold text-inherit d-block">
                             {{ $user->display_name }}
                         </a>
-                        <a href="setting/{{ $user->url_name }}" class="text-inherit text-muted">
+                        <a href="user/{{ $user->url_name }}" class="text-inherit text-muted">
                             &#64;{{ $user->url_name }}
                         </a>
                     </div>
